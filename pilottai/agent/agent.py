@@ -91,10 +91,13 @@ class Agent(BaseAgent):
 
     def _verify_tasks(self, tasks):
         tasks_obj = None
-        if isinstance(tasks, str):
-            tasks_obj = TaskUtility.to_task(tasks)
-        elif isinstance(tasks, list):
-            tasks_obj = TaskUtility.to_task_list(tasks)
+        try:
+            if isinstance(tasks, str) or isinstance(tasks, Task):
+                tasks_obj = [TaskUtility.to_task(tasks)]
+            elif isinstance(tasks, list):
+                tasks_obj = TaskUtility.to_task_list(tasks)
+        except:
+            raise ValueError(f"Cannot convert {type(tasks)} to Task. Must be a string, dictionary, or Task object.")
         return tasks_obj
 
     async def execute_tasks(self) -> List[TaskResult]:

@@ -10,3 +10,4 @@ __pycache__/
 dist/
 .vscode/
 /test.py
+/main.py
